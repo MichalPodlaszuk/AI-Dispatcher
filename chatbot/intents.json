@@ -1,7 +1,48 @@
 {
   "intents": [
     {
+      "tag": "random",
+      "patterns": [
+        "Oh my God. Oh my God. Oh.",
+        "Yes, I’m talking to the officer. Yes, yes."
+      ],
+      "responses": [
 
+      ]
+    },
+    {
+      "tag": "location",
+      "patterns": [
+        "Yes, 2900 East Vaughn Avenue, Gilbert.",
+        "I'm at 131 Kinsale Ave Valparaiso, Indiana",
+
+      ],
+      "responses": [
+
+      ]
+    },
+    {
+      "tag": "emergency",
+      "patterns": [
+        "My daughter was left in the car.",
+        "My Dad came into my house, threatening me, we got in a fight, I told him to leave. He came back inside wanting to fight me again and I shot him."
+      ],
+      "responses": [
+
+      ]
+    },
+    {
+      "tag": "description",
+      "patterns": [
+        "And my husband just went out there.",
+        "She’s 3.",
+        "She was supposed to go to school today and we let — we kept her home today. And she",
+        "I’m not even home. I’m at work.",
+        "hours. It’s been like, hours.",
+        "Yes, he’s off over the bank bleeding right now.",
+        "He’s breathing. You might want to hurry though",
+        "The gun is in my pocket. It’s on my table right now."
+      ]
     }
   ]
 }

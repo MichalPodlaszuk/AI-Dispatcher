@@ -4,9 +4,10 @@ import pytesseract
 from pdf2image import convert_from_path
 from functools import lru_cache
 
+
 @lru_cache
-def pdf2text(filename):
-    pages = convert_from_path(filename, 350)
+def pdf2text(filename, number):
+    pages = convert_from_path(f'../data/data_raw/pdf/{filename}', 350)
     img_list = []
     txt_files = []
     i = 1
@@ -22,18 +23,18 @@ def pdf2text(filename):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         ret, thresh1 = cv2.threshold(gray, 0, 255, cv2.THRESH_OTSU | cv2.THRESH_BINARY_INV)
         rect_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (40, 40))
-        dilation = cv2.dilate(thresh1, rect_kernel, iterations = 1)
+        dilation = cv2.dilate(thresh1, rect_kernel, iterations=1)
         contours, hierarchy = cv2.findContours(dilation, cv2.RETR_EXTERNAL,
-                                                         cv2.CHAIN_APPROX_NONE)
+                                               cv2.CHAIN_APPROX_NONE)
         im2 = img.copy()
-        file = open("../data/data_raw/text/recognized" + str(j) + ".txt", "w+")
-        txt_files.append("../data/data_raw/text/recognized" + str(j) + ".txt")
+        file = open("../data/data_raw/text/recognized" + str(number) + str(j) + ".txt", "w+")
+        txt_files.append("../data/data_raw/text/recognized" + str(number) + str(j) + ".txt")
         file.write("")
         file.close()
         for cnt in contours:
             x, y, w, h = cv2.boundingRect(cnt)
             cropped = im2[y:y + h, x:x + w]
-            file = open("../data/data_raw/text/recognized" + str(j) + ".txt", "r+")
+            file = open("../data/data_raw/text/recognized" + str(number) + str(j) + ".txt", "r+")
             content = file.read()
             file.seek(0, 0)
             text = pytesseract.image_to_string(cropped)
@@ -43,17 +44,14 @@ def pdf2text(filename):
         os.remove(image)
     for i in range(1, len(txt_files) + 1):
         try:
-            with open('../data/data_raw/text/recognized1.txt', 'a') as file_1, open(txt_files[i], 'r+') as file_2:
+            with open('../data/data_raw/text/recognized' + str(number) + '1.txt', 'a') as file_1, open(txt_files[i], 'r+') as file_2:
                 content = file_2.read()
                 file_1.write('\n' + content)
                 file_1.close()
                 file_2.close()
                 os.remove(txt_files[i])
-        except Exception:
-            print('FUCK YOU INDEX EXCEPTION')
-
-pdf2text('../data/data_raw/pdf/5d72f0d0f0642.file.pdf')
-
+        except:
+            pass
 
 
 
