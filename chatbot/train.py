@@ -59,7 +59,7 @@ learning_rate = 0.001
 num_epochs = 1000
 
 dataset = ChatDataset()
-train_loader = DataLoader(dataset=dataset, batch_size=batch_size, shuffle=True, num_workers=2)
+train_loader = DataLoader(dataset=dataset, batch_size=batch_size, shuffle=True)
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model = NeuralNet(input_size, hidden_size, output_size).to(device)
@@ -70,7 +70,7 @@ optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 for epoch in range(num_epochs):
     for (word, label) in train_loader:
         words = word.to(device)
-        labels = label.to(device)
+        labels = torch.tensor(label, dtype=torch.long, device=device)
 
         output = model(words)
         loss = criterion(output, labels)
@@ -96,4 +96,4 @@ data = {
 FILE = 'data.pth'
 torch.save(data, FILE)
 
-print(f'Training complete. File saved to {FILE}, model saved to {PATH}')
+print(f'Training complete. File saved to {FILE}')

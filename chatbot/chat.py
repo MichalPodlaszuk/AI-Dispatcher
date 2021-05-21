@@ -24,7 +24,7 @@ model.load_state_dict(model_state)
 model.eval()
 
 bot_name = 'AI-Dispatcher'
-print("This is AI-Dispatcher demo. I'm in testing mode and I don't operate on voice conversation yet")
+print(f'{bot_name}: Hello, this is 911 dispatcher, what is your emergency')
 while True:
     sentence = input('You: ')
     if sentence == 'quit':
@@ -33,9 +33,9 @@ while True:
     tokenized_sentence = tokenize(sentence)
     X = bag_of_words(tokenized_sentence, all_words)
     X_reshaped = X.reshape(1, X.shape[0])
-    X_tensor = torch.from_numpy(X_reshaped)
+    X_tensor = torch.from_numpy(X_reshaped).to(device)
 
-    output = model(X)
+    output = model(X_tensor)
     _, predicted = torch.max(output, dim=1)
     tag = tags[predicted.item()]
 
@@ -44,7 +44,7 @@ while True:
 
     if prob.item() > 0.6:
         for intent in intents['intents']:
-            if tag == intent['tags']:
-                print(f'{bot_name}: {random.choice(intent["responses"])}')
+            if tag == intent['tag']:
+                print(f'{bot_name}: {random.choice(intent["responses"])}, detected intent: {tag}')
     else:
         print(f"{bot_name}: Please repeat your message more clearly")

@@ -3,37 +3,81 @@
     {
       "tag": "random",
       "patterns": [
+        "Please hurry!",
+        "I'm not sure",
+        "I don't know",
+        "okay",
+        "Im coming home",
+        "I have no idea...",
         "Oh my God. Oh my God. Oh.",
-        "Yes, I’m talking to the officer. Yes, yes."
+        "Yes, I’m talking to the officer. Yes, yes.",
+        "Yes, ma’am."
       ],
       "responses": [
-
+        "test response"
       ]
     },
     {
       "tag": "location",
       "patterns": [
+        "It’s 1002 West Mission Avenue.",
+        "5-2-2 Lomas Boulevard, Northeast.",
+        "7801 Paisley Park",
+        "that is Haverhill",
+        "Southbound Macleod Trail at Southland Drive",
+        "I’m at 7096 - 1A St SW. It’s a store called Elektrika.",
+        "I believe I'm by Highmore.",
+        "Im at i Asheville, um, oh God.",
+        "The Country Inn and Suites, 1900 Premier Drive.",
+        "1616 Wadsworth Street Southeast.",
         "Yes, 2900 East Vaughn Avenue, Gilbert.",
-        "I'm at 131 Kinsale Ave Valparaiso, Indiana",
-
+        "I'm at 131 Kinsale Ave Valparaiso, Indiana"
       ],
       "responses": [
-
+        "test response"
       ]
     },
     {
       "tag": "emergency",
       "patterns": [
+        "Uh, we have a 31 year old female, who underwent an abortion today.",
+        "My mom and dad are having a fight.",
+        "We have someone who is unconscious.",
+        "a car has gone off the road here",
+        "| was just driving home from work. There was this car driving crazy down Macleod Trail, it was insane! Weaving in and out, going so fast.",
+        "I just came to pick up my husband from work and he has been shot! I think he’s dead!",
+        "There is a car crash",
+        "I hit a woman",
+        "I hit a man",
+        "I hit something.",
+        "I just got a text from a friend, it said she was abducted while she was walking the baby",
+        "There's a person here who destroys things",
+        "Um, there’s a guest here throwing stuff.",
+        "My car was stolen",
+        "My Car is gone.",
         "My daughter was left in the car.",
-        "My Dad came into my house, threatening me, we got in a fight, I told him to leave. He came back inside wanting to fight me again and I shot him."
+        "I shot him.",
+        "I shot my husband",
+        "I killed a man",
+        "I killed my brother",
+        "Someone shot my dad",
+        "My friend is unconscious",
+        "My grandma is not breathing",
+        "someone broke into my house",
+        "someone has breaken into my home",
+        "My Dad came into my house, threatening me"
       ],
       "responses": [
-
+        "test response"
       ]
     },
     {
       "tag": "description",
       "patterns": [
+        "he has a heartbeat, it’s very, very faint.",
+        "He’s still laying there just barely breathing ma’am.",
+        "he’s barely breathing.",
+        "We got in a fight, I told him to leave. He came back inside wanting to fight me again and ",
         "And my husband just went out there.",
         "She’s 3.",
         "She was supposed to go to school today and we let — we kept her home today. And she",
@@ -41,7 +85,12 @@
         "hours. It’s been like, hours.",
         "Yes, he’s off over the bank bleeding right now.",
         "He’s breathing. You might want to hurry though",
-        "The gun is in my pocket. It’s on my table right now."
+        "The gun is in my pocket. It’s on my table right now.",
+        "He’s still breathing, but it’s not looking good, he’s leaning over the bank.",
+        "He is unconscious. He’s unconscious now."
+      ],
+      "responses": [
+        "test response"
       ]
     }
   ]
