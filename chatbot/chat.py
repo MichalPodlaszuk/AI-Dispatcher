@@ -3,10 +3,11 @@ import json
 import torch
 from model import NeuralNet
 from nltk_utils import tokenize, bag_of_words
+from speech.speech_handling import speech_recognizer
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-with open('intents.json', 'r') as f:
+with open('../data/data_clean/intents.json', 'r') as f:
     intents = json.load(f)
 
 FILE = 'data.pth'
@@ -24,9 +25,10 @@ model.load_state_dict(model_state)
 model.eval()
 
 bot_name = 'AI-Dispatcher'
-print(f'{bot_name}: Hello, this is 911 dispatcher, what is your emergency')
+print(f'{bot_name}: Hello, this is 911 dispatcher, what is your emergency *this is a test version, say quit to stop*')
+last_response = ['Hello, this is 911 dispatcher, what is your emergency']
 while True:
-    sentence = input('You: ')
+    sentence = speech_recognizer(chat=True, previous=last_response[-1])
     if sentence == 'quit':
         break
 
@@ -45,6 +47,8 @@ while True:
     if prob.item() > 0.6:
         for intent in intents['intents']:
             if tag == intent['tag']:
-                print(f'{bot_name}: {random.choice(intent["responses"])}, detected intent: {tag}')
+                response = random.choice(intent["responses"])
+                print(f'{bot_name}: {response}, detected intent: {tag}')
+                last_response.append(response)
     else:
         print(f"{bot_name}: Please repeat your message more clearly")

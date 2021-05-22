@@ -1,9 +1,15 @@
 import nltk
 from nltk.stem.porter import PorterStemmer
 import numpy as np
+from functools import lru_cache
 
-nltk.download('punkt')
+
 stemmer = PorterStemmer()
+
+
+@lru_cache()
+def loader():
+    nltk.download('punkt')
 
 
 def tokenize(sentence):

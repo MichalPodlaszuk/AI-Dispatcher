@@ -5,8 +5,11 @@ from playsound import playsound
 import os
 
 
-def speech_recognizer():
-    print('talk now')
+def speech_recognizer(chat=False, previous='talk now'):
+    if chat:
+        speak(previous)
+    else:
+        print(previous)
     r = sr.Recognizer()
     recording = sr.Microphone()
     with recording as source:
@@ -22,5 +25,4 @@ def speak(audio_string):
     audio_file = 'audio' + str(r) + '.mp3'
     tts.save(audio_file)
     playsound(audio_file)
-    print(f"kiri: {audio_string}")
     os.remove(audio_file)
