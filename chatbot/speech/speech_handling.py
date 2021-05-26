@@ -25,4 +25,4 @@ def speak(audio_string):
     audio_file = 'audio' + str(r) + '.mp3'
     tts.save(audio_file)
     playsound(audio_file)
-    os.remove(audio_file)
+    os.remove(os.getcwd() + '/' + audio_file)

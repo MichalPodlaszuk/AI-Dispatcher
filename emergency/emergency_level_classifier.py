@@ -1,13 +1,13 @@
 import json
-from nltk_utils import tokenize, stem, bag_of_words
+from chatbot.nltk_utils import tokenize, stem, bag_of_words
 import numpy as np
 import torch
 import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
-from model import NeuralNet
+from chatbot.model import NeuralNet
 import spacy
 
-with open('../data/data_clean/intents.json', 'r') as f:
+with open('../data/data_clean/levels.json', 'r') as f:
     intents = json.load(f)
 
 nlp = spacy.load('en_core_web_trf')
@@ -33,10 +33,10 @@ Y_train = []
 for (pattern_sentence, tag) in xy:
     bag = bag_of_words(pattern_sentence, all_words)
     X_train.append(bag)
-    
+
     label = tags.index(tag)
     Y_train.append(label)
-    
+
 X_train = np.array(X_train)
 Y_train = np.array(Y_train)
 
@@ -46,7 +46,7 @@ class ChatDataset(Dataset):
         self.n_samples = len(X_train)
         self.x_data = X_train
         self.y_data = Y_train
-        
+
     def __getitem__(self, index):
         return self.x_data[index], self.y_data[index]
 
@@ -83,7 +83,7 @@ for epoch in range(num_epochs):
         optimizer.step()
 
     if (epoch + 1) % 100 == 0:
-        print(f'epoch {epoch+1}/{num_epochs}, loss={loss.item():.4f}')
+        print(f'epoch {epoch + 1}/{num_epochs}, loss={loss.item():.4f}')
 
 print(f'final loss, loss={loss.item():.4f}')
 
@@ -96,7 +96,7 @@ data = {
     'tags': tags
 }
 
-FILE = '../data/model_data/data.pth'
+FILE = '../data/model_data/data_levels.pth'
 torch.save(data, FILE)
 
 print(f'Training complete. File saved to {FILE}')

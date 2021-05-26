@@ -2,6 +2,7 @@ import nltk
 from nltk.stem.porter import PorterStemmer
 import numpy as np
 from functools import lru_cache
+import spacy
 
 
 stemmer = PorterStemmer()
@@ -27,3 +28,11 @@ def bag_of_words(tokenized_sentence, all_words):
         if w in tokenized_sentence:
             bag[idx] = 1.0
     return bag
+
+
+@lru_cache()
+def remove_stop(sentence):
+    nlp = spacy.load('en_core_web_trf')
+    stopwords = spacy.lang.en.stop_words.STOP_WORDS
+    sent_without_stop = [w for w in tokenize(sentence) if w not in stopwords]
+    return sent_without_stop
