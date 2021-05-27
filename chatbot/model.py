@@ -17,11 +17,3 @@ class NeuralNet(nn.Module):
         x = self.relu(x)
         x = self.l3(x)
         return x
-
-
-def run():
-    torch.multiprocessing.freeze_support()
-    print('loop')
-
-if __name__ == '__main__':
-    run()

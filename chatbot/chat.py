@@ -94,10 +94,10 @@ while True:
         else:
             print('asking for location')
             last_response.append('Okay, tell me where you are')
-    if tag == 'location' and emergency[1] == '3' or emergency[1] == '4':
+    elif tag == 'random' and len(emergency) == 0:
+        last_response.append(random.choice(['Tell me what happened', 'please tell me what is going on']))
+    elif tag == 'random' and len(location) == 0:
+        last_response.append(random.choice(['I need to know your location please', 'try to find out where exactly you are']))
+    elif tag == 'location' and emergency[1] == '3' or emergency[1] == '4':
         location.append(sentence)
         last_response.append('Okay tell me again exactly what happened')
-    if tag == 'random' and len(emergency) == 0:
-        last_response.append(random.choice(['Tell me what happened', 'please tell me what is going on']))
-    if tag == 'random' and len(location) == 0:
-        last_response.append(random.choice(['I need to know your location please', 'try to find out where exactly you are']))
