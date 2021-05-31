@@ -1,30 +1,14 @@
-import json
-from chatbot.nltk_utils import tokenize, stem, bag_of_words
+from chatbot.nltk_utils import stem, bag_of_words
 import numpy as np
 import torch
 import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
 from chatbot.model import NeuralNet
-import spacy
+from data_preprocessing.data_augmentation import load
 
-with open('../data/data_clean/levels.json', 'r') as f:
-    intents = json.load(f)
+all_words, tags, xy = load('levels')
 
-nlp = spacy.load('en_core_web_trf')
-
-all_words = []
-tags = []
-xy = []
-for intent in intents['intents']:
-    tag = intent['tag']
-    tags.append(tag)
-    for pattern in intent['patterns']:
-        w = tokenize(pattern)
-        all_words.extend(w)
-        xy.append((w, tag))
-
-ignore_words = spacy.lang.en.stop_words.STOP_WORDS
-all_words = [stem(w) for w in all_words if w not in ignore_words]
+all_words = [stem(w) for w in all_words]
 all_words = sorted(set(all_words))
 tags = sorted(set(tags))
 

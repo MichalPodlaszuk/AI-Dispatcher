@@ -33,6 +33,7 @@ def bag_of_words(tokenized_sentence, all_words):
 @lru_cache()
 def remove_stop(sentence):
     nlp = spacy.load('en_core_web_trf')
-    stopwords = spacy.lang.en.stop_words.STOP_WORDS
+    stopwords = [',', '.', '?', '!']
+    stopwords.extend(spacy.lang.en.stop_words.STOP_WORDS)
     sent_without_stop = [w for w in tokenize(sentence) if w not in stopwords]
     return sent_without_stop
