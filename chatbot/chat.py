@@ -4,39 +4,46 @@ import torch
 from model import NeuralNet
 from nltk_utils import bag_of_words, remove_stop
 from speech.speech_handling import speech_recognizer, speak
+from functools import lru_cache
 
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+@lru_cache()
+def load_everything():
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-with open('../data/data_clean/intents.json', 'r') as f, open('../data/data_clean/levels.json') as g:
-    intents = json.load(f)
-    levels = json.load(g)
+    with open('../data/data_clean/intents.json', 'r') as f, open('../data/data_clean/levels.json') as g:
+        intents = json.load(f)
+        levels = json.load(g)
 
-FILE = '../data/model_data/data.pth'
-FILE_LEVELS = '../data/model_data/data_levels.pth'
-data = torch.load(FILE)
-data_levels = torch.load(FILE_LEVELS)
+    FILE = '../data/model_data/data.pth'
+    FILE_LEVELS = '../data/model_data/data_levels.pth'
+    data = torch.load(FILE)
+    data_levels = torch.load(FILE_LEVELS)
 
-output_size = data['output_size']
-input_size = data['input_size']
-hidden_size = data['hidden_size']
-all_words = data['all_words']
-tags = data['tags']
-model_state = data['model_state']
+    output_size = data['output_size']
+    input_size = data['input_size']
+    hidden_size = data['hidden_size']
+    all_words = data['all_words']
+    tags = data['tags']
+    model_state = data['model_state']
 
-output_size_levels = data_levels['output_size']
-input_size_levels = data_levels['input_size']
-hidden_size_levels = data_levels['hidden_size']
-all_words_levels = data_levels['all_words']
-tags_levels = data_levels['tags']
-model_state_levels = data_levels['model_state']
+    output_size_levels = data_levels['output_size']
+    input_size_levels = data_levels['input_size']
+    hidden_size_levels = data_levels['hidden_size']
+    all_words_levels = data_levels['all_words']
+    tags_levels = data_levels['tags']
+    model_state_levels = data_levels['model_state']
 
-model = NeuralNet(input_size, hidden_size, output_size).to(device)
-model.load_state_dict(model_state)
-model.eval()
+    model = NeuralNet(input_size, hidden_size, output_size).to(device)
+    model.load_state_dict(model_state)
+    model.eval()
 
-model_levels = NeuralNet(input_size_levels, hidden_size_levels, output_size_levels).to(device)
-model_levels.load_state_dict(model_state_levels)
-model_levels.eval()
+    model_levels = NeuralNet(input_size_levels, hidden_size_levels, output_size_levels).to(device)
+    model_levels.load_state_dict(model_state_levels)
+    model_levels.eval()
+    return levels, tags_levels, model_levels, all_words_levels, intents, tags, model, all_words, device
+
+
+levels, tags_levels, model_levels, all_words_levels, intents, tags, model, all_words, device = load_everything()
 
 bot_name = 'AI-Dispatcher'
 print(f'{bot_name}: Hello, this is 911 dispatcher, what is your emergency *this is a test version, say quit to stop*')
@@ -44,6 +51,7 @@ last_response = ['Hello this is 911 dispatcher, what is your emergency']
 previous_tag = []
 location = []
 emergency = []
+description = []
 
 
 def classify(sentence, all_words, model, tags, file):
@@ -82,7 +90,7 @@ while True:
     tag, response = classify(sentence, all_words, model, tags, intents)
     last_response.append(response)
     previous_tag = tag
-    if tag == 'emergency':
+    if tag == 'emergency' and len(emergency) == 0:
         print(f'detected tag:{tag}, starting emergency classification')
         level, action = classify(sentence, all_words_levels, model_levels, tags_levels, levels)
         print(f'emergency level detected: {level}')
@@ -94,10 +102,15 @@ while True:
         else:
             print('asking for location')
             last_response.append('Okay, tell me where you are')
-    elif tag == 'random' and len(emergency) == 0:
+    if tag == 'emergency' and len(emergency) > 0:
+        description.append(sentence)
+    if (tag == 'random' or tag == 'description') and len(emergency) == 0:
         last_response.append(random.choice(['Tell me what happened', 'please tell me what is going on']))
-    elif tag == 'random' and len(location) == 0:
+    if tag == 'random' and len(location) == 0:
         last_response.append(random.choice(['I need to know your location please', 'try to find out where exactly you are']))
-    elif tag == 'location' and emergency[1] == '3' or emergency[1] == '4':
+    if tag == 'location' and emergency[1] == '3' or emergency[1] == '4':
         location.append(sentence)
         last_response.append('Okay tell me again exactly what happened')
+
+
+        #elif tag == ''
