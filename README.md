@@ -53,3 +53,5 @@ Dispatch centers tend to be overloaded with calls even though they are still hir
 In my opinion the project is done, and it works quite well once loaded. I had a lot of fun with it and I'm quite proud with the idea, the only thing that troubled me the most was the amount of data I got which is really poor. I think if I had enough data to work with I could a bit more slowly but surely make the model more robust and more functional. If I have some more data and any more ideas in the future I will try to implement that for sure because I really like this idea and I think it could be really useful with more data and work put into it but for that I would need to be allowed to get more data which, sadly, I'm not at this point.
 
 Anyway if you've come this far and have some thoughts or ideas feel free to contact me on [LinkedIn](https://www.linkedin.com/in/micha%C5%82-podlaszuk-612a99200/)
+
+And if you want to use it just install the requirements and run [chat.py](../blob/main/chatbot/chat.py) script.
